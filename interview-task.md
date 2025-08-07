@@ -137,5 +137,5 @@ This file should serve as documentation for an AI agent that will read, maintain
 
 ## Time & Submission
 
-- Deadline: 48 hours after receiving this task
+- Deadline: Monday 17:00
 - Submit: a zip file of your Angular project code (include `AGENT.md` in the root)
