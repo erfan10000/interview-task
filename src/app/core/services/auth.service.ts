@@ -40,23 +40,12 @@ export class AuthService {
   }
 
   login(login: LoginModel): Observable<any | undefined> {
-    // return this._http.post<any>(`${this.apiUrl}/auth/login`, login).pipe(
-    //   tap(res => {
-    //     if (res?.access_token && res?.refresh_token) {
-    //       this.storeTokens(res.access_token, res.refresh_token);
-    //       this._userService.setUser(res.user);
-    //     }
-    //   }),
-    //   catchError(() => {
-    //     this._notice.showErrorMessage('Login failed');
-    //     return of(undefined);
-    //   })
-    // );
-    return this._http.get<any>(`https://hessadnani.com/api/mock.json`).pipe(
+    return this._http.get<any>(`/mock-data/mock.json`).pipe(
       tap(res => {
         if (res?.auth?.access_token && res?.auth?.refresh_token) {
           this.storeTokens(res.auth.access_token, res.auth.refresh_token);
           this._userService.setUser(res.user as UserModel);
+          this._router.navigate(['/p']);
         }
       }),
       catchError(() => {
