@@ -32,6 +32,13 @@ export const APP_ROUTES: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [PrivatePagesGuard],
   },
+  {
+  path: 'events',
+  loadChildren: () =>
+    import('./pages/private/event-management/event-management.module').then(m => m.EventManagementModule),
+  runGuardsAndResolvers: 'always',
+  canActivate: [PrivatePagesGuard] 
+  },
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: '**', redirectTo: '/not-found', pathMatch: 'full'},
 ];
