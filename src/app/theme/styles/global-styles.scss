@@ -111,6 +111,13 @@
   position: relative;
   margin: 0 auto;
 }
+
+nz-date-picker{
+    width: 100%;
+}
+
+
+
 @media screen and (max-width: $screen-laptop) {
   .responsive-container {
     max-width: $screen-laptop-width;
@@ -124,6 +131,10 @@
 @media screen and (max-width: $screen-mobile) {
   .responsive-container {
     max-width: $screen-mobile-width;
+  }
+
+  .ant-table-content{
+  overflow: scroll;
   }
 }
 

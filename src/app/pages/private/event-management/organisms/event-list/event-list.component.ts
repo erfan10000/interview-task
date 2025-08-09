@@ -9,13 +9,18 @@ import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FormsModule } from '@angular/forms';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzColDirective, NzGridModule } from "ng-zorro-antd/grid";
 
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.scss'],
-  imports: [CommonModule,NzTableModule, NzInputModule, NzSelectModule, FormsModule],
+  imports: [CommonModule, NzTableModule, NzInputModule, NzGridModule,
+    NzButtonModule, NzSelectModule, FormsModule, NzModalModule, NzColDirective],
 })
 export class EventListComponent implements OnInit, OnDestroy {
   events: Event[] = [];
@@ -29,7 +34,8 @@ export class EventListComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private eventService: EventService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private modalService: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -90,8 +96,15 @@ export class EventListComponent implements OnInit, OnDestroy {
   }
 
   deleteEvent(eventId: string): void {
-    if (confirm('Are you sure you want to delete this event?')) {
-      this.eventService.deleteEvent(eventId);
-    }
+    this.modalService.confirm({
+      nzTitle: 'Confirm Deletion',
+      nzContent: 'Are you sure you want to delete this event? This action cannot be undone.',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzCancelText: 'No',
+      nzOnOk: () => this.eventService.deleteEvent(eventId),
+      nzOnCancel: () => console.log('Deletion cancelled')
+    });
   }
 }

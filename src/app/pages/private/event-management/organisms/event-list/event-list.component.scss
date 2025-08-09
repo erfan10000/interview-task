@@ -1,3 +1,25 @@
 .spacer{
     height: 0.5rem;
 }
+
+.event-list-container{
+    button{
+        min-width: 4.5rem;
+    }
+}
+
+.edit-btn{
+    margin-right: 0.5rem;
+
+}
+
+.mobile-only{
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .mobile-only {
+        display: block;
+    }
+  
+}
