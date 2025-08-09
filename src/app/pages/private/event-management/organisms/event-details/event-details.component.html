@@ -1,0 +1,15 @@
+<div *ngIf="event">
+  <nz-descriptions nzTitle="Event Details" nzBordered>
+    <nz-descriptions-item nzTitle="Title">{{ event.title }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Description">{{ event.description }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Start Date">{{ event.startDateTime | date:'medium' }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="End Date">{{ event.endDateTime | date:'medium' }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Timezone">{{ event.timezone }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Venue">{{ event.venue.venueName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Public">{{ event.isPublic ? 'Yes' : 'No' }}</nz-descriptions-item>
+  </nz-descriptions>
+  <img *ngIf="event.primaryImageUrl" [src]="event.primaryImageUrl" style="width: 200px;">
+  <br *ngIf="event.isPublic">
+  <button *ngIf="event.isPublic" nz-button nzType="primary" (click)="copyPublicLink()">Copy Public Link</button>
+</div>
+<div *ngIf="!event">Event not found.</div>

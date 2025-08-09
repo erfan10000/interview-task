@@ -1,1 +1,12 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h2>Welcome to Your Dashboard</h2>
+  <nz-card nzTitle="Upcoming Events" *ngIf="upcomingEvents.length > 0">
+    <nz-list>
+      <nz-list-item *ngFor="let event of upcomingEvents">
+        {{ event.title }} - {{ event.startDateTime | date:'short' }} ({{ event.venue.venueName }})
+      </nz-list-item>
+    </nz-list>
+  </nz-card>
+  <div *ngIf="upcomingEvents.length === 0">No upcoming events.</div>
+  <button nz-button nzType="primary" (click)="goToEventManagement()">Manage Events</button>
+</div>

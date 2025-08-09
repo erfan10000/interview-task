@@ -1,0 +1,59 @@
+<form nz-form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Title</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="title" placeholder="Event Title" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Description</nz-form-label>
+    <nz-form-control>
+      <textarea nz-input formControlName="description" placeholder="Event Description"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Start Date & Time</nz-form-label>
+    <nz-form-control>
+      <nz-date-picker formControlName="startDateTime" nzShowTime></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>End Date & Time</nz-form-label>
+    <nz-form-control>
+      <nz-date-picker formControlName="endDateTime" nzShowTime></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Timezone</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="timezone" placeholder="e.g., UTC" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Location (Venue)</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="venue.venueName" placeholder="Venue Name" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Primary Image URL</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="primaryImageUrl" placeholder="Paste image URL" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Cover Image URL</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="coverImageUrl" placeholder="Paste image URL" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Public Event</nz-form-label>
+    <nz-form-control>
+      <nz-switch formControlName="isPublic"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <button nz-button nzType="primary" [disabled]="!eventForm.valid">Submit</button>
+  </nz-form-item>
+</form>

@@ -1,0 +1,35 @@
+<div>
+  <nz-input-group [nzPrefix]="'Search'">
+    <input nz-input placeholder="Search by title" [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" />
+  </nz-input-group>
+  <div class="spacer"></div>
+  <nz-select [(ngModel)]="filterPublic" (ngModelChange)="onFilterChange($event)" nzPlaceHolder="Filter by Public/Private">
+    <nz-option [nzValue]="null" nzLabel="All"></nz-option>
+    <nz-option [nzValue]="true" nzLabel="Public"></nz-option>
+    <nz-option [nzValue]="false" nzLabel="Private"></nz-option>
+  </nz-select>
+  <nz-table #eventTable [nzData]="filteredEvents" [nzLoading]="isLoading">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Venue</th>
+        <th>Public</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of filteredEvents">
+        <td>{{ event.title }}</td>
+        <td>{{ event.startDateTime | date:'medium' }}</td>
+        <td>{{ event.venue.venueName }}</td>
+        <td>{{ event.isPublic ? 'Yes' : 'No' }}</td>
+        <td>
+          <button nz-button nzType="primary" (click)="editEvent(event.id)">Edit</button>
+          <button nz-button nzDanger="true" (click)="deleteEvent(event.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <!-- <div *ngIf="!isLoading && filteredEvents.length === 0">No events found.</div> -->
+</div>

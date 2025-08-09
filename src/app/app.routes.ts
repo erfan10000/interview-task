@@ -33,7 +33,7 @@ export const APP_ROUTES: Routes = [
     canActivate: [PrivatePagesGuard],
   },
   {
-  path: 'events',
+  path: 'p/events',
   loadChildren: () =>
     import('./pages/private/event-management/event-management.module').then(m => m.EventManagementModule),
   runGuardsAndResolvers: 'always',

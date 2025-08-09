@@ -16,6 +16,10 @@ export const PRIVATE_PAGES_ROUTES: Routes = [
         path: "dashboard",
         component: DashboardComponent,
       },
+      {
+        path: "events",
+        loadChildren: () => import('./event-management/event-management.module').then(m => m.EventManagementModule)
+      },
     ],
   },
 ];

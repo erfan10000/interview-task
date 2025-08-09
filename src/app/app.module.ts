@@ -21,6 +21,7 @@ import { TranslateModule, MissingTranslationHandler } from '@ngx-translate/core'
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
+import { NzCardModule } from 'ng-zorro-antd/card';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 
 import { MyMissingTranslationHandler } from './core/handlers/missing-translation.handler';

@@ -1,0 +1,97 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../../core/services/auth.service';
+import { UserService } from '../../../../../core/services/user.service';
+import { EventService } from '../../services/event.service';
+import { Subscription } from 'rxjs';
+import { Event } from '../../models/event.model';
+import { CommonModule } from '@angular/common';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-event-list',
+  templateUrl: './event-list.component.html',
+  styleUrls: ['./event-list.component.scss'],
+  imports: [CommonModule,NzTableModule, NzInputModule, NzSelectModule, FormsModule],
+})
+export class EventListComponent implements OnInit, OnDestroy {
+  events: Event[] = [];
+  filteredEvents: Event[] = [];
+  searchTerm = '';
+  filterPublic: boolean | null = null;
+  isLoading = true;
+  private userSubscription: Subscription | undefined;
+
+  constructor(
+    private authService: AuthService,
+    private eventService: EventService,
+    private userService: UserService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    // Subscribe to getCurrentUser observable
+    this.userSubscription = this.userService.getCurrentUser().subscribe(user => {
+      const orgId = user?.activeOrganizationId; // Access activeOrganizationId after the observable resolves
+      this.eventService.getEvents(orgId).subscribe(events => {
+        this.events = events;
+        this.filteredEvents = events;
+        this.isLoading = false;
+      });
+    });
+
+    // Fallback to the signal if getCurrentUser hasn't been called yet or failed
+    const currentUser = this.userService.user();
+    if (currentUser) {
+      const orgId = currentUser.activeOrganizationId;
+      this.eventService.getEvents(orgId).subscribe(events => {
+        this.events = events;
+        this.filteredEvents = events;
+        this.isLoading = false;
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
+  onSearch(): void {
+    this.applyFilters();
+  }
+
+  onFilterChange(value: boolean | null): void {
+    this.filterPublic = value;
+    this.applyFilters();
+  }
+
+  sortByDate(data: Event[]): Event[] {
+    return data.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
+  }
+
+  applyFilters(): void {
+    let filtered = [...this.events];
+    if (this.searchTerm) {
+      filtered = filtered.filter(e => e.title.toLowerCase().includes(this.searchTerm.toLowerCase()));
+    }
+    if (this.filterPublic !== null) {
+      filtered = filtered.filter(e => e.isPublic === this.filterPublic);
+    }
+    this.filteredEvents = this.sortByDate(filtered);
+  }
+
+  editEvent(eventId: string): void {
+    this.router.navigate(['/p/events', eventId, 'edit']);
+  }
+
+  deleteEvent(eventId: string): void {
+    if (confirm('Are you sure you want to delete this event?')) {
+      this.eventService.deleteEvent(eventId);
+    }
+  }
+}
