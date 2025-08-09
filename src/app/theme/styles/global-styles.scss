@@ -124,6 +124,167 @@ nz-date-picker{
   display: flex !important;
 }
 
+// Glassmorphism reusable container
+.glass-container {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  // box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 2rem;
+  max-width: 100rem;
+  margin: auto;
+  width: 100%;
+  
+}
+
+// Glass header style
+.glass-header {
+  text-align: left;
+  font-size: 26px;
+  font-weight: 700;
+  color: #05205c;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+  /* Optional: subtle text shadow for glass effect */
+  text-shadow: 0 1px 8px rgba(255,255,255,0.2);
+}
+
+// Smooth blurred background for the whole app
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+  /* Add a blurred overlay */
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  // background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+  opacity: 0.35;
+  filter: blur(16px) brightness(0.9);
+}
+
+:root {
+  /* Light mode defaults */
+  --bg-img: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80');
+  --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+  --bg-overlay-opacity: 0.35;
+  --bg-blur: 14px;
+  --bg-brightness: 0.95;
+
+  --text-color: #222831;
+  --muted-color: #6b7280;
+
+  /* glass */
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.6);
+  --glass-shadow: 0 6px 18px rgba(16,24,40,0.06);
+}
+
+/* Dark theme overrides */
+body.theme-dark {
+  --bg-img: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1500&q=80'); /* darker image */
+  --bg-gradient: linear-gradient(135deg, #071029 0%, #001219 100%);
+  --bg-overlay-opacity: 0.55;
+  --bg-blur: 18px;
+  --bg-brightness: 0.7;
+
+  --text-color: #e6eef8;
+  --muted-color: #93a4bf;
+
+  --glass-bg: rgb(110 110 110 / 25%);
+  --glass-border: rgba(255,255,255,0.04);
+  --glass-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Apply base background + blurred image layer + gradient overlay */
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text-color);
+  background: var(--bg-gradient);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* remote background image blurred */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  // background: var(--bg-img) center/cover no-repeat;
+  opacity: var(--bg-overlay-opacity);
+  filter: blur(var(--bg-blur)) brightness(var(--bg-brightness));
+  transform: translateZ(0); /* GPU */
+}
+
+/* soft color overlay to tint the background */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  pointer-events: none;
+}
+
+
+
+/* ===== Glass panels ===== */
+.glass-container {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  backdrop-filter: blur(8px) saturate(110%);
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  box-shadow: var(--glass-shadow);
+  color: var(--text-color);
+  margin-top: 3rem;
+}
+
+/* Header bar */
+.glass-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+/* main title */
+.glass-header {
+  text-align: left;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 4px rgba(255,255,255,0.06);
+}
+
+/* small utilities */
+.theme-toggle-btn {
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.glass-container nz-card,
+.glass-container nz-table {
+  background: transparent; /* let the glass panel show */
+}
+
+.ant-table{
+  background: #ffffff8c;
+}
 
 
 @media screen and (max-width: $screen-laptop) {

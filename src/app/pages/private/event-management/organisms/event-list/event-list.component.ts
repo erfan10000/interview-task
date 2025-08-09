@@ -15,12 +15,15 @@ import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzColDirective, NzGridModule } from "ng-zorro-antd/grid";
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.scss'],
-  imports: [CommonModule, NzTableModule, NzInputModule, NzGridModule,NzIconModule,
+  imports: [CommonModule, NzTableModule,NzMenuModule, NzInputModule, NzGridModule,NzIconModule,NzDropDownModule,
     NzButtonModule, NzSelectModule, FormsModule, NzModalModule, NzColDirective],
 })
 export class EventListComponent implements OnInit, OnDestroy {
@@ -28,16 +31,20 @@ export class EventListComponent implements OnInit, OnDestroy {
   filteredEvents: Event[] = [];
   searchTerm = '';
   filterPublic: boolean | null = null;
+  isShareModalVisible = false;
+  shareUrl = '';
   isLoading = true;
   sortDirection: 'ascend' | 'descend' | null = null;
   private userSubscription: Subscription | undefined;
+  
 
   constructor(
     private authService: AuthService,
     private eventService: EventService,
     private userService: UserService,
     private router: Router,
-    private modalService: NzModalService
+    private modalService: NzModalService,
+    private clipboard: Clipboard
   ) {}
 
   ngOnInit(): void {
@@ -78,7 +85,7 @@ export class EventListComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-sortByDate(data: Event[]): Event[] {
+  sortByDate(data: Event[]): Event[] {
     return [...data].sort((a, b) => {
       const dateA = new Date(a.startDateTime).getTime();
       const dateB = new Date(b.startDateTime).getTime();
@@ -100,6 +107,31 @@ sortByDate(data: Event[]): Event[] {
   toggleSort(): void {
     this.sortDirection = this.sortDirection === 'ascend' ? 'descend' : 'ascend';
     this.applyFilters(); // Reapply filters and sort with new direction
+  }
+
+  copyPublicLink(eventId: string): void {
+    const publicUrl = `${window.location.origin}/p/events/${eventId}`;
+    this.clipboard.copy(publicUrl);
+    this.modalService.success({
+      nzTitle: 'Copied!',
+      nzContent: `The public link (${publicUrl}) has been copied to your clipboard.`,
+      nzOkText: 'OK'
+    });
+  }
+
+  showShareModal(eventId: string): void {
+    this.shareUrl = `${window.location.origin}/p/events/${eventId}`;
+    this.isShareModalVisible = true;
+  
+  }
+
+   handleShareModalCancel(): void {
+    this.isShareModalVisible = false;
+  }
+
+  shareOnSocial(platform: string): void {
+    // Implement social sharing logic
+    console.log(`Sharing ${this.shareUrl} on ${platform}`);
   }
 
   editEvent(eventId: string): void {

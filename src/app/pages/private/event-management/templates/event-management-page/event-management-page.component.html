@@ -1,4 +1,12 @@
-<div class="event-management-container">
-  <h2>Event Management</h2>
+<div class="event-management-container glass-container">
+  <header class="glass-header-bar">
+    <h2 class="glass-header">Event Management</h2>
+     <div>
+    <button nz-button nzType="default" class="theme-toggle-btn" (click)="toggleTheme()" aria-label="Toggle theme">
+      <span *ngIf="theme === 'light'" nz-icon nzType="moon"></span>
+      <span *ngIf="theme === 'dark'" nz-icon nzType="sun"></span>
+    </button>
+    </div>
+  </header>
   <router-outlet></router-outlet>
 </div>

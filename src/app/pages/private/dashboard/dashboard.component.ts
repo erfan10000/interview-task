@@ -5,11 +5,12 @@ import { Event } from '../event-management/models/event.model';
 import { NzCardComponent } from "ng-zorro-antd/card";
 import { CommonModule } from '@angular/common';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  imports: [NzCardComponent, CommonModule, NzListModule]
+  imports: [NzCardComponent, CommonModule, NzListModule, NzButtonModule]
 })
 export class DashboardComponent implements OnInit {
   upcomingEvents: Event[] = [];

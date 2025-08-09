@@ -5,6 +5,13 @@
   padding-right: 3rem;
 }
 
+.theme-toggle-btn{
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid #0000001c;
+  
+}
+
 @media (max-width: 768px) {
   .event-management-container {
     padding: 20px;

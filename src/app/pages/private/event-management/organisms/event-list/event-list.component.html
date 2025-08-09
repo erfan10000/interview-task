@@ -47,9 +47,31 @@
         <td>{{ event.venue.venueName }}</td>
         <td>{{ event.isPublic ? 'Yes' : 'No' }}</td>
         <td>
-          <button nz-button nzType="primary" class="edit-btn" (click)="editEvent(event.id)">Edit</button>
-          <div class="mobile-only spacer"></div>
-          <button nz-button nzType="default" (click)="deleteEvent(event.id)">Delete</button>
+          <div class="action-buttons">
+
+            <div class="edit-btn">
+
+              <button nz-button (click)="editEvent(event.id)" nzType="default">
+                Edit
+              </button>
+            </div>
+            <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzType="default">
+              <span nz-icon nzType="more"></span>
+            </button>
+          </div>
+
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item (click)="editEvent(event.id)">Edit</li>
+              <li nz-menu-item (click)="deleteEvent(event.id)">Delete</li>
+              <li nz-menu-item *ngIf="event.isPublic" (click)="copyPublicLink(event.id)">
+                <span nz-icon nzType="link"></span> Copy Link
+              </li>
+              <li nz-menu-item *ngIf="event.isPublic" (click)="showShareModal(event.id)">
+                <span nz-icon nzType="share-alt"></span> Share
+              </li>
+            </ul>
+          </nz-dropdown-menu>
         </td>
       </tr>
       
@@ -58,3 +80,35 @@
   </nz-table>
   <!-- <div *ngIf="!isLoading && filteredEvents.length === 0">No events found.</div> -->
 </div>
+
+<!-- Add this at the bottom of your event-list.component.html -->
+<nz-modal
+  [(nzVisible)]="isShareModalVisible"
+  nzTitle="Share Event"
+  [nzFooter]="null"
+  (nzOnCancel)="handleShareModalCancel()">
+  <div>
+    <p>Share this event with others:</p>
+    <nz-input-group>
+      <input nz-input [value]="shareUrl" readonly />
+    </nz-input-group>
+    <div style="margin-top: 16px;">
+      <button nz-button nzType="default" (click)="copyPublicLink(shareUrl)" style="margin-right: 8px;">
+        <span nz-icon nzType="copy"></span> Copy Link
+      </button>
+      <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="socialMenu" style="margin-right: 8px;">
+        <span nz-icon nzType="share-alt"></span> Share via...
+      </button>
+      <nz-dropdown-menu #socialMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="shareOnSocial('facebook')">
+            <span nz-icon nzType="facebook"></span> Facebook
+          </li>
+          <li nz-menu-item (click)="shareOnSocial('twitter')">
+            <span nz-icon nzType="twitter"></span> Twitter
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </div>
+</nz-modal>
