@@ -1,28 +1,40 @@
 <div class="event-list-container">
   <nz-row [nzGutter]="16">
-    <nz-col [nzMd]="16" [nzXs]="24">
+    <nz-col [nzMd]="12" [nzLg]="10" [nzXs]="24">
       <nz-input-group [nzPrefix]="'Search'">
         <input nz-input placeholder="Search by title" [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" />
       </nz-input-group>
       <div class="spacer"></div>
     </nz-col>
-    <nz-col [nzMd]="8" [nzXs]="24">
+    <nz-col [nzMd]="8" [nzLg]="10" [nzXs]="24">
       <nz-select [(ngModel)]="filterPublic" (ngModelChange)="onFilterChange($event)" nzPlaceHolder="Filter by Public/Private">
         <nz-option [nzValue]="null" nzLabel="All"></nz-option>
         <nz-option [nzValue]="true" nzLabel="Public"></nz-option>
         <nz-option [nzValue]="false" nzLabel="Private"></nz-option>
       </nz-select>
+       
       <div class="spacer"></div>
+    </nz-col>
+    <nz-col [nzMd]="1" [nzXs]="24">
+      <div class="seprator">
+        <button button nz-button nzType="primary" (click)="createEvent()" style="margin-bottom: 16px;">Create</button>
+      </div>
     </nz-col>
   </nz-row>
   
-  
+ 
   
   <nz-table #eventTable [nzData]="filteredEvents" [nzLoading]="isLoading">
     <thead>
       <tr>
         <th>Title</th>
-        <th>Date</th>
+        <th (click)="toggleSort()" class="date-th">
+          <span>
+
+            Date
+          </span>
+          <span nz-icon [nzType]="sortDirection === 'ascend' ? 'arrow-up' : 'arrow-down'" ></span>
+        </th>
         <th>Venue</th>
         <th>Public</th>
         <th>Actions</th>
@@ -40,7 +52,9 @@
           <button nz-button nzType="default" (click)="deleteEvent(event.id)">Delete</button>
         </td>
       </tr>
+      
     </tbody>
+    
   </nz-table>
   <!-- <div *ngIf="!isLoading && filteredEvents.length === 0">No events found.</div> -->
 </div>

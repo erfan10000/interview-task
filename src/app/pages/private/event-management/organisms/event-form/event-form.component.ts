@@ -108,8 +108,8 @@ export class EventFormComponent implements OnInit {
 
   private showCannotEditModal(): void {
     this.modalService.info({
-      nzTitle: 'Cannot Edit Data',
-      nzContent: 'Editing is not available with the current mock data setup. Please contact the administrator to enable editing functionality.',
+      nzTitle: 'Cannot Save Data',
+      nzContent: 'Saving is not available with the current mock data setup. Please contact the administrator to enable editing functionality.',
       nzOkText: 'OK',
       nzOnOk: () => this.router.navigate(['/p/events']) 
     });

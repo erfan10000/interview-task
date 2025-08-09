@@ -14,12 +14,13 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzColDirective, NzGridModule } from "ng-zorro-antd/grid";
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.scss'],
-  imports: [CommonModule, NzTableModule, NzInputModule, NzGridModule,
+  imports: [CommonModule, NzTableModule, NzInputModule, NzGridModule,NzIconModule,
     NzButtonModule, NzSelectModule, FormsModule, NzModalModule, NzColDirective],
 })
 export class EventListComponent implements OnInit, OnDestroy {
@@ -28,6 +29,7 @@ export class EventListComponent implements OnInit, OnDestroy {
   searchTerm = '';
   filterPublic: boolean | null = null;
   isLoading = true;
+  sortDirection: 'ascend' | 'descend' | null = null;
   private userSubscription: Subscription | undefined;
 
   constructor(
@@ -76,8 +78,12 @@ export class EventListComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  sortByDate(data: Event[]): Event[] {
-    return data.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
+sortByDate(data: Event[]): Event[] {
+    return [...data].sort((a, b) => {
+      const dateA = new Date(a.startDateTime).getTime();
+      const dateB = new Date(b.startDateTime).getTime();
+      return this.sortDirection === 'ascend' ? dateA - dateB : dateB - dateA;
+    });
   }
 
   applyFilters(): void {
@@ -89,6 +95,11 @@ export class EventListComponent implements OnInit, OnDestroy {
       filtered = filtered.filter(e => e.isPublic === this.filterPublic);
     }
     this.filteredEvents = this.sortByDate(filtered);
+  }
+
+  toggleSort(): void {
+    this.sortDirection = this.sortDirection === 'ascend' ? 'descend' : 'ascend';
+    this.applyFilters(); // Reapply filters and sort with new direction
   }
 
   editEvent(eventId: string): void {
@@ -106,5 +117,9 @@ export class EventListComponent implements OnInit, OnDestroy {
       nzOnOk: () => this.eventService.deleteEvent(eventId),
       nzOnCancel: () => console.log('Deletion cancelled')
     });
+  }
+
+  createEvent(): void {
+    this.router.navigate(['/p/events/create']);
   }
 }
