@@ -17,14 +17,14 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzColDirective, NzGridModule } from 'ng-zorro-antd/grid';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-
+import { NzUploadModule, NzUploadComponent , NzUploadChangeParam } from 'ng-zorro-antd/upload'
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
   styleUrls: ['./event-form.component.scss'],
   imports: [CommonModule, NzFormModule, NzInputModule,
-  NzDatePickerModule, NzSwitchModule, NzButtonModule,NzModalModule,
-  ReactiveFormsModule, NzCardModule, NzGridModule, NzColDirective],
+    NzDatePickerModule, NzSwitchModule, NzButtonModule,NzUploadModule,
+    ReactiveFormsModule, NzCardModule, NzGridModule, NzColDirective, NzUploadComponent],
 })
 export class EventFormComponent implements OnInit {
   eventForm: FormGroup;
@@ -40,7 +40,7 @@ export class EventFormComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private userService: UserService,
-    private modalService: NzModalService
+    private modalService: NzModalService,
   ) {
     this.eventForm = this.fb.group({
       title: ['', Validators.required],
@@ -122,6 +122,19 @@ export class EventFormComponent implements OnInit {
       this.eventService.createEvent(event);
     }
     this.router.navigate(['/p/events']);
+  }
+
+  handleUploadChange({ file, fileList }: NzUploadChangeParam, controlName: string): void {
+    const isImage = file.type && file.type.startsWith('image/');
+    if (isImage && file.status === 'done') {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.eventForm.get(controlName)?.setValue(e.target?.result as string); // Set base64 string
+      };
+      reader.readAsDataURL(file.originFileObj as Blob);
+    } else if (file.status === 'error') {
+      console.error('Upload failed:', file.name);
+    }
   }
 
   ngOnDestroy(): void {

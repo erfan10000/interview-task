@@ -116,6 +116,14 @@ nz-date-picker{
     width: 100%;
 }
 
+.ant-upload{
+  padding: 1rem !important;
+}
+
+.ant-upload-drag-container{
+  display: flex !important;
+}
+
 
 
 @media screen and (max-width: $screen-laptop) {

@@ -15,7 +15,7 @@
     
 
     <nz-row [nzGutter]="16">
-      <nz-col [nzMd]="8" [nzXs]="24">
+      <nz-col [nzMd]="12" [nzLg]="8" [nzXs]="24">
         <nz-form-item>
           <nz-form-label [nzRequired]="true">Start Date & Time</nz-form-label>
           <nz-form-control>
@@ -23,7 +23,7 @@
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-      <nz-col [nzMd]="8" [nzXs]="24">
+      <nz-col [nzMd]="12" [nzLg]="8" [nzXs]="24">
         <nz-form-item>
           <nz-form-label>End Date & Time</nz-form-label>
           <nz-form-control>
@@ -31,7 +31,7 @@
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-      <nz-col [nzMd]="8" [nzXs]="24">
+      <nz-col [nzMd]="24" [nzLg]="8" [nzXs]="24">
           <nz-form-item>
             <nz-form-label [nzRequired]="true">Timezone</nz-form-label>
             <nz-form-control>
@@ -54,13 +54,27 @@
     <nz-form-item>
       <nz-form-label>Primary Image URL</nz-form-label>
       <nz-form-control>
-        <input nz-input formControlName="primaryImageUrl" placeholder="Paste image URL" />
+        <nz-upload
+          nzType="drag"
+          [nzAccept]="'image/*'"
+          (nzChange)="handleUploadChange($event, 'primaryImageUrl')"
+        >
+          <input nz-input formControlName="primaryImageUrl" placeholder="Paste image URL or upload" />
+          <button nz-button nzType="default" style="margin-left: 8px;">Upload</button>
+        </nz-upload>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label>Cover Image URL</nz-form-label>
       <nz-form-control>
-        <input nz-input formControlName="coverImageUrl" placeholder="Paste image URL" />
+        <nz-upload
+          nzType="drag"
+          [nzAccept]="'image/*'"
+          (nzChange)="handleUploadChange($event, 'coverImageUrl')"
+        >
+          <input nz-input formControlName="coverImageUrl" placeholder="Paste image URL or upload" />
+          <button nz-button nzType="default" style="margin-left: 8px;">Upload</button>
+        </nz-upload>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
