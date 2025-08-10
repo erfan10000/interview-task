@@ -81,12 +81,16 @@
   <!-- <div *ngIf="!isLoading && filteredEvents.length === 0">No events found.</div> -->
 </div>
 
-<!-- Add this at the bottom of your event-list.component.html -->
 <nz-modal
   [(nzVisible)]="isShareModalVisible"
   nzTitle="Share Event"
   [nzFooter]="null"
-  (nzOnCancel)="handleShareModalCancel()">
+  (nzOnCancel)="handleShareModalCancel()"
+  [nzContent]="shareModalContent"
+>
+</nz-modal>
+
+<ng-template #shareModalContent>
   <div>
     <p>Share this event with others:</p>
     <nz-input-group>
@@ -111,4 +115,4 @@
       </nz-dropdown-menu>
     </div>
   </div>
-</nz-modal>
+</ng-template>

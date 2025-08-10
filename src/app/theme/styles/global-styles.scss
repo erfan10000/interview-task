@@ -184,6 +184,11 @@ body::before {
   --glass-bg: rgba(255,255,255,0.55);
   --glass-border: rgba(255,255,255,0.6);
   --glass-shadow: 0 6px 18px rgba(16,24,40,0.06);
+
+  --bg-main:#e6eef8;
+  --bg-form:#f8fafc;
+  --bg-form-hover:#f1f5f9;
+  --bg-header: #ffffff;
 }
 
 /* Dark theme overrides */
@@ -200,6 +205,11 @@ body.theme-dark {
   --glass-bg: rgb(110 110 110 / 25%);
   --glass-border: rgba(255,255,255,0.04);
   --glass-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+  --bg-main:#1e1e1e;
+  --bg-form:#1e1e1e;
+  --bg-form-hover:#3c3c3c;
+  --bg-header: #0c0c0c;
 }
 
 /* Apply base background + blurred image layer + gradient overlay */
@@ -234,7 +244,9 @@ body::after {
   pointer-events: none;
 }
 
-
+.ant-upload.ant-upload-drag{
+  background: var(--bg-gradient);
+}
 
 /* ===== Glass panels ===== */
 .glass-container {
@@ -275,6 +287,7 @@ body::after {
   display: inline-flex;
   align-items: center;
   padding: 0 0.5rem;
+  background: var(--bg-main);
 }
 
 .glass-container nz-card,
@@ -286,6 +299,62 @@ body::after {
   background: #ffffff8c;
 }
 
+.ant-card-head-title,.ant-form-item-label > label,
+.ant-input, .ant-picker-input > input{
+  color: var(--text-color);
+}
+
+.ant-input, .ant-picker-input > input,
+ .ant-picker,.ant-input-affix-wrapper,.ant-select,
+ .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector,
+ .ant-select:not(.ant-select-customize-input) .ant-select-selector,.ant-select-dropdown
+ ,.ant-select-item,.ant-pagination-item-active,.ant-table-cell{
+  background: var(--bg-form);
+  color: var(--text-color);
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled),
+.ant-pagination-item-link,.ant-table-tbody > tr.ant-table-row:hover > td, .ant-table-tbody > tr > td.ant-table-cell-row-hover{
+  color: var(--text-color) !important;
+  background: var(--bg-form-hover);
+  background-color: var(--bg-form-hover) !important;
+}
+
+.ant-table-thead > tr > th {
+  background: var(--bg-header);
+  color: var(--text-color);
+}
+
+.ant-modal-header, .ant-modal-title{
+  background: var(--bg-header);
+  color: var(--text-color);
+}
+
+.ant-btn-default{
+  background: var(--bg-form);
+  color: var(--text-color);
+}
+
+.ant-modal-content {
+  background: var(--bg-form);
+  color: var(--text-color);
+}
+
+.ant-modal-confirm-title,.ant-modal-confirm-content{
+  color: var(--text-color) !important;
+}
+
+@media screen and (max-width: 1600px) {
+  .glass-container{
+    max-width: unset;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    width: unset;
+    
+  }
+  
+}
+
 
 @media screen and (max-width: $screen-laptop) {
   .responsive-container {
@@ -295,6 +364,12 @@ body::after {
 @media screen and (max-width: $screen-tablet) {
   .responsive-container {
     max-width: $screen-tablet-width;
+  }
+
+    .glass-container{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    
   }
 }
 @media screen and (max-width: $screen-mobile) {
