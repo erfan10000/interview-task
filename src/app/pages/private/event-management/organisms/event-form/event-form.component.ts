@@ -18,6 +18,8 @@ import { NzColDirective, NzGridModule } from 'ng-zorro-antd/grid';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzUploadModule, NzUploadComponent , NzUploadChangeParam } from 'ng-zorro-antd/upload'
+
+// AI Prompt: "Generate a basic Angular component with a reactive form for an event using NG-ZORRO components"
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
@@ -30,24 +32,25 @@ export class EventFormComponent implements OnInit {
   eventForm: FormGroup;
   isEditMode = false;
   eventId: string | null = null;
-  private userSubscription: Subscription | undefined;
+  public userSubscription: Subscription | undefined;
   isLoading = false;
 
   constructor(
+    public route: ActivatedRoute,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private eventService: EventService,
     private authService: AuthService,
     private userService: UserService,
     private modalService: NzModalService,
   ) {
+    // AI Prompt: "Add form validation with required fields and custom validators for an Angular reactive form"
     this.eventForm = this.fb.group({
-      title: ['', Validators.required],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: [''],
       startDateTime: ['', Validators.required],
       endDateTime: [''],
-      timezone: ['UTC', Validators.required],
+      timezone: ['UTC', [Validators.required, Validators.pattern(/^UTC[+-]\d{2}:\d{2}$|^UTC$/)]],
       venue: this.fb.group({ venueName: [''] }),
       primaryImageUrl: [''],
       coverImageUrl: [''],
@@ -107,6 +110,7 @@ export class EventFormComponent implements OnInit {
   }
 
   private showCannotEditModal(): void {
+    // AI-prompt: Add Modal logic to handle mock data limitation
     this.modalService.info({
       nzTitle: 'Cannot Save Data',
       nzContent: 'Saving is not available with the current mock data setup. Please contact the administrator to enable editing functionality.',
@@ -124,6 +128,7 @@ export class EventFormComponent implements OnInit {
     this.router.navigate(['/p/events']);
   }
 
+  // AI Prompt: "Implement file upload handling for an Angular form with NG-ZORRO upload component"
   handleUploadChange({ file, fileList }: NzUploadChangeParam, controlName: string): void {
     const isImage = file.type && file.type.startsWith('image/');
     if (isImage && file.status === 'done') {

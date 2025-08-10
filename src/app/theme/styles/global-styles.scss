@@ -189,6 +189,7 @@ body::before {
   --bg-form:#f8fafc;
   --bg-form-hover:#f1f5f9;
   --bg-header: #ffffff;
+  --btn-color: #000000;
 }
 
 /* Dark theme overrides */
@@ -210,6 +211,7 @@ body.theme-dark {
   --bg-form:#1e1e1e;
   --bg-form-hover:#3c3c3c;
   --bg-header: #0c0c0c;
+  --btn-color: #ffffff;
 }
 
 /* Apply base background + blurred image layer + gradient overlay */
@@ -342,6 +344,10 @@ body::after {
 
 .ant-modal-confirm-title,.ant-modal-confirm-content{
   color: var(--text-color) !important;
+}
+
+.ant-modal-close-icon{
+  color: var(--btn-color);
 }
 
 @media screen and (max-width: 1600px) {

@@ -19,6 +19,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 
+// AI Prompt: "Create an Angular component to display a list of events with search, filter, and sort functionality using NG-ZORRO"
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
@@ -119,6 +120,7 @@ export class EventListComponent implements OnInit, OnDestroy {
     });
   }
 
+  // AI Prompt: "Implement a share modal with social media options for an Angular component using NG-ZORRO"
   showShareModal(eventId: string): void {
     this.shareUrl = `${window.location.origin}/p/events/${eventId}`;
     this.isShareModalVisible = true;

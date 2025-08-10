@@ -1,7 +1,7 @@
 # Event Management Module Documentation
 
 ## Module Purpose
-The `EventManagementModule`, located in `pages/private/`, enables logged-in users to manage events for their organization. using mock data from public/mock-data/mock.json Users can view a list of events, create new events, edit existing ones, view event details, at `/p/events`.
+The `EventManagementModule`, located in `pages/private/`, enables logged-in users to manage events for their organization. using mock data from public/mock-data/mock.json Users can view a list of events, create new events, edit existing ones, view event details, at `/p/events` A summary of upcoming events and basic stats (total, public, private event counts) are displayed on the dashboard at /p/dashboard.
 
 **Key Files/Folders:**
 - `event-management.module.ts`: Feature module definition.
@@ -59,6 +59,7 @@ This module follows a hybrid design approach: NG-ZORRO provides atoms and molecu
 
 ## AI Agent Notes
 - **AI Usage:** Grok was used to generate boilerplate code for components, services, and templates, as well as suggest fixes for errors like standalone component imports and routing issues.
+Specific AI-generated snippets or prompts are commented in the source files (e.g., `event-form.component.ts`, `event-list.component.ts`) to indicate where assistance was provided.
 - **Naming Conventions:**
   - Components: PascalCase (e.g., `EventListComponent`).
   - Services: camelCase with suffix (e.g., `eventService`).
